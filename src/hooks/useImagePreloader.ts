@@ -11,6 +11,10 @@ export function useImagePreloader(imageUrls: string[]) {
 
         const img = new Image()
         img.src = url
+        // 尝试调用 decode() 以提前解码图像，减少首次绘制延迟
+        if ('decode' in img && typeof img.decode === 'function') {
+          img.decode().catch(() => {})
+        }
         preloadedRef.current.add(url)
       })
     }

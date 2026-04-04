@@ -7,7 +7,7 @@
 
 > 面向 NY 2026.14 班同学的班级宣传网站，采用 React 18 + TypeScript + Vite 构建，支持视频播放、博客文章、Markdown 渲染、图片轮播等功能。
 
-**在线预览**: [jinmukun.qzz.io](http://jinmukun.qzz.io)
+**在线预览**: [dev.dpdns.org](http://dev.dpdns.org)
 
 ---
 

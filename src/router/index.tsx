@@ -2,8 +2,6 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import HomeView from '../views/HomeView'
 import VideoView from '../views/VideoView'
-import BlogView from '../views/BlogView'
-import BlogArticleView from '../views/BlogArticleView'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -22,8 +20,6 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<HomeView />} />
         <Route path="/video" element={<VideoView />} />
-        <Route path="/blog" element={<BlogView />} />
-        <Route path="/blog/:id" element={<BlogArticleView />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

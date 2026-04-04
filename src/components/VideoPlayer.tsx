@@ -47,9 +47,88 @@ function VideoPlayer({ currentSrc, currentTitle }: VideoPlayerProps) {
     setLoadingStatus('正在加载...')
     setLoadingProgress(0)
 
+    // 优化：先设置 preload 为 metadata，尽量只获取元数据而非整片下载
+    try {
+      video.preload = 'metadata'
+    } catch (e) {
+      // 某些环境下可能不支持直接赋值，忽略
+    }
+
+    // 添加 hint 给浏览器，可以帮助更快建立连接（会被浏览器智能处理）
+    const preloadLink = document.createElement('link')
+    preloadLink.rel = 'preload'
+    preloadLink.as = 'video'
+    preloadLink.href = currentSrc
+    // 尝试设置常见类型，若未知也无妨
+    preloadLink.type = 'video/mp4'
+    document.head.appendChild(preloadLink)
+
     video.src = currentSrc
+    // 只加载 metadata，使得浏览器不会立刻下载整片
     video.load()
+
+    return () => {
+      // 移除预加载标签
+      try {
+        if (preloadLink && preloadLink.parentNode) preloadLink.parentNode.removeChild(preloadLink)
+      } catch (e) {}
+      // 尝试取消正在进行的视频下载并暂停播放
+      try {
+        if (video) {
+          video.pause()
+          // 清除 src 以中止下载
+          video.removeAttribute('src')
+          video.load()
+        }
+      } catch (e) {}
+    }
   }, [isInViewport, currentSrc])
+
+  // 当视频进入视口或当前源变化时，尝试自动播放所有视频。
+  // 策略：先尝试有声播放；若因浏览器策略被阻止，再将静音并重试一次以实现自动播放。
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    if (!isInViewport || !currentSrc) return
+
+    let cancelled = false
+
+    const attemptPlay = async () => {
+      try {
+        if (cancelled) return
+        video.muted = false
+        const p = video.play()
+        if (p && typeof (p as Promise<void>).catch === 'function') {
+          await (p as Promise<void>)
+        }
+      } catch (err) {
+        if (cancelled) return
+        try {
+          video.muted = true
+          const p2 = video.play()
+          if (p2 && typeof (p2 as Promise<void>).catch === 'function') {
+            await (p2 as Promise<void>).catch(() => {})
+          }
+        } catch (e) {}
+      }
+    }
+
+    attemptPlay()
+
+    return () => {
+      cancelled = true
+    }
+  }, [isInViewport, currentSrc])
+
+  // 清理可能残留的 requestAnimationFrame
+  useEffect(() => {
+    return () => {
+      if (progressRafRef.current) {
+        cancelAnimationFrame(progressRafRef.current)
+        progressRafRef.current = null
+      }
+    }
+  }, [])
 
   const retryLoad = useCallback(() => {
     const video = videoRef.current
@@ -156,6 +235,9 @@ function VideoPlayer({ currentSrc, currentTitle }: VideoPlayerProps) {
     setLoadingStatus(errorMsg)
   }
 
+  // 推测 poster 路径：videos/video1.mp4 -> images/videos/video1.jpg
+  const poster = currentSrc ? currentSrc.replace(/^videos\//, 'images/videos/').replace(/\.mp4$/, '.jpg') : undefined
+
   return (
     <section id="video" className="video-section" ref={sectionRef}>
       <h2 className="section-title">
@@ -170,9 +252,9 @@ function VideoPlayer({ currentSrc, currentTitle }: VideoPlayerProps) {
           ref={videoRef}
           controls
           controlsList="nodownload"
-          preload="none"
+          preload={isInViewport ? 'metadata' : 'none'}
+          poster={poster}
           playsInline
-          autoPlay={currentSrc !== 'videos/video1.mp4'}
           onContextMenu={(e) => e.preventDefault()}
           onLoadStart={onLoadStart}
           onProgress={onProgress}

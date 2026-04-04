@@ -3,8 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 const navItems = [
   { path: '/', label: '首页', name: 'home' },
-  { path: '/video', label: '视频', name: 'video' },
-  { path: '/blog', label: '博客', name: 'blog' }
+  { path: '/video', label: '视频', name: 'video' }
 ] as const
 
 function NavigationBar() {

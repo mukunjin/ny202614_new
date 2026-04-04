@@ -17,7 +17,9 @@ function VideoView() {
     <div className="video-view">
       <div className="page-header">
         <h1 className="page-title">
-          <span className="title-icon">🎬</span>
+          <span className="title-icon" aria-hidden>
+            <img src="/images/home/nav1.jpg" alt="" className="title-icon-img" />
+          </span>
           视频专区
         </h1>
         <p className="page-desc">记录超人视频</p>

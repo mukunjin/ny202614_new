@@ -56,6 +56,13 @@
   letter-spacing: -0.02em;
 }
 
+/* 更醒目、更具辨识度的展示型标题（根据 frontend-design 技能） */
+.hero-title {
+  font-family: var(--font-display, var(--font-sans));
+  text-transform: none;
+  letter-spacing: -0.03em;
+}
+
 .hero-subtitle {
   font-size: 1.5rem;
   color: var(--text-secondary);
@@ -75,13 +82,22 @@
   left: 50%;
   transform: translateX(-50%);
   bottom: -36px;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   color: var(--text-secondary);
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.scroll-hint:focus-visible {
+  outline: 3px solid rgba(59,130,246,0.15);
+  outline-offset: 4px;
 }
 
 .scroll-hint:hover {
@@ -94,8 +110,9 @@
 }
 
 .scroll-arrow {
-  width: 32px;
-  height: 32px;
+
+  width: 36px;
+  height: 36px;
   animation: bounce 2s infinite;
 }
 
@@ -148,8 +165,10 @@
 
 .entrance-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* 使用 auto-fit + minmax 在项目较少时保持卡片居中，并在多列时自适应布局 */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
   gap: 24px;
+  justify-content: center;
 }
 
 .entrance-card {
@@ -210,8 +229,43 @@
   transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.card-icon svg,
+.card-icon img,
+.card-icon-img {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: block;
+}
+
 .entrance-card:hover .card-icon {
   transform: scale(1.1);
+}
+
+/* title icon svg sizing */
+.title-icon svg,
+.title-icon img,
+.title-icon-img {
+  width: 1.1rem;
+  height: 1.1rem;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+/* larger variants for card wrapper when needed */
+.card-icon-wrapper .card-icon-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+}
+
+.title-icon .title-icon-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: inline-block;
 }
 
 .card-title {
@@ -272,8 +326,7 @@
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.
-95rem;
+  font-size: 0.95rem;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-xs);
 }
@@ -596,10 +649,9 @@
 }
 
 .article-image img {
-  max-width: 100%;
-  max-height: 500px;
-  width: auto;
+  width: 100%;
   height: auto;
+  max-height: 500px;
   display: block;
   object-fit: contain;
 }
@@ -674,5 +726,36 @@
 
   .article-paragraph {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-article-view {
+    padding: 12px 12px 32px;
+  }
+
+  .article-header {
+    padding: 16px;
+  }
+
+  .article-title {
+    font-size: 1.25rem;
+  }
+
+  .article-image {
+    margin: 0 12px 18px;
+    max-width: calc(100% - 24px);
+    border-radius: var(--radius-md);
+  }
+
+  .article-image img {
+    max-height: 260px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .article-body {
+    padding: 16px;
   }
 }

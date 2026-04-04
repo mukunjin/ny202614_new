@@ -15,7 +15,7 @@ const priorityImages = [
 
 function HomeView() {
   const entranceRef = useRef<HTMLDivElement>(null)
-  
+
   // 优先预加载首页关键图片
   usePriorityPreloader(priorityImages)
 
@@ -52,14 +52,14 @@ function HomeView() {
           <div className="hero-content">
             <h1 className="hero-title">NY 2026.14班</h1>
             <p className="hero-subtitle">宣传网站</p>
-            <div className="scroll-hint" onClick={scrollToContent}>
+            <button className="scroll-hint" type="button" onClick={scrollToContent} aria-label="下滑探索更多">
               <span className="scroll-text">下滑探索更多</span>
-              <div className="scroll-arrow">
+              <span className="scroll-arrow" aria-hidden>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 5v14M5 12l7 7 7-7" />
                 </svg>
-              </div>
-            </div>
+              </span>
+            </button>
           </div>
           <div className="carousel-wrapper">
             <Carousel3D />
@@ -73,10 +73,12 @@ function HomeView() {
           <div className="entrance-cards">
             <Link to="/video" className="entrance-card video-card">
               <div className="card-icon-wrapper">
-                <span className="card-icon">🎬</span>
+                <span className="card-icon" aria-hidden>
+                  <img src="/images/home/nav1.jpg" alt="" className="card-icon-img" />
+                </span>
               </div>
               <h3 className="card-title">视频专区</h3>
-              <p className="card-desc">超人视频</p>
+              <p className="card-desc">上面这张图片是夏嘉兴参观南开拍的</p>
               <span className="card-link">
                 <span>进入视频</span>
                 <svg className="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -85,23 +87,11 @@ function HomeView() {
               </span>
             </Link>
 
-            <Link to="/blog" className="entrance-card blog-card">
-              <div className="card-icon-wrapper">
-                <span className="card-icon">📝</span>
-              </div>
-              <h3 className="card-title">博客专区</h3>
-              <p className="card-desc">随笔/日志/文章</p>
-              <span className="card-link">
-                <span>进入博客</span>
-                <svg className="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </span>
-            </Link>
+            {/* 博客已移除 */}
           </div>
 
           <div className="github-link">
-            <a href="https://github.com/Jin-Mukun/ny202614_new" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/mukunjin/ny202614_new" target="_blank" rel="noopener noreferrer">
               <img src="/images/home/home1.png" alt="GitHub" className="github-icon" loading="lazy" />
               <span className="github-text">本网站开源至Github，欢迎贡献代码</span>
               <svg className="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

@@ -43,10 +43,19 @@ function VideoList({ onSelectVideo }: VideoListProps) {
             onKeyDown={(e) => e.key === 'Enter' && selectVideo(video)}
           >
             <div className="video-item-cover">
+              {/* 可选缩略图：videos/video1.mp4 -> images/videos/video1.jpg */}
+              <img
+                src={video.src.replace(/^videos\//, 'images/videos/').replace(/\.mp4$/, '.jpg')}
+                alt={video.title}
+                loading="lazy"
+                decoding="async"
+                className="video-thumb"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+              />
               <span className="play-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M8 5v14l11-7z"/>
-                </svg> 
+                </svg>
               </span>
             </div>
             <div className="video-item-content">
