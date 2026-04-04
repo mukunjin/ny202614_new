@@ -72,6 +72,6 @@ npm run preview
 
 联系方式
 
-- 仓库: https://github.com/Jin-Mukun/ny202614_new
+- 仓库: https://github.com/mukunjin/ny202614_new
 
 Made for NY 2026.14
