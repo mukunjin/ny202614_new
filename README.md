@@ -60,15 +60,7 @@ npm run preview
 注意事项
 
 - 浏览器自动播放策略：组件会尝试优先有声播放，若被策略阻止会静音重试。
-- 若需要视频封面，请在 `public/images/videos/` 放置同名 `.jpg` 作为 poster。
 
-贡献
-
-- Fork → 分支开发 → 提交 PR
-
-许可证
-
-- MIT
 
 联系方式
 
