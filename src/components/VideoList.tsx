@@ -15,7 +15,9 @@ const videos: Video[] = [
   { id: 8, src: 'videos/video8.mp4', title: '割玉坠机', description: '割玉成为演员<br>(拍摄于2026.01.16)' },
   { id: 9, src: 'videos/video9.mp4', title: '【全站首发】第一个有预谋的视频', description: '无尾蛇向吴简展示频率<br>(拍摄于2026.01.23)' },
   { id: 10, src: 'videos/video10.mp4', title: '世！纪！大！战！', description: '强强对决<br>(拍摄于2026.01.14)' },
-  { id: 11, src: 'videos/video11.mp4', title: '【精选】无能的战神', description: '体测模拟完教室里拍的<br>(拍摄于2026.04.03)' }
+  { id: 11, src: 'videos/video11.mp4', title: '【精选】无能的战神', description: '体测模拟完教室里拍的<br>(拍摄于2026.04.03)' },
+  { id: 12, src: 'videos/video12.mp4', title: '战神慢动作拳击', description: '秦老师拍的<br>(拍摄于...太久了搞忘了)' },
+  { id: 13, src: 'videos/video13.mp4', title: '我也没看懂', description: '这是啥<br>(拍摄于2025.11.24)' }
 ]
 
 function VideoList({ onSelectVideo }: VideoListProps) {
